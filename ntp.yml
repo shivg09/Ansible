@@ -1,0 +1,36 @@
+---
+- hosts: all
+  become_user: root
+  vars:
+   ntp_server: test149.siqes.com
+  
+  tasks:
+    - name: remove chrony client package
+      yum:
+        name=chrony
+        state=absent
+      tags: remove_chrony.start_ntp
+  # this task is to ensure ntp is installed
+    - name: install ntp client
+      yum: 
+        name=ntp
+        state=present
+      tags: install_ntp,start_ntp
+    - name: copy ntp.conf to the client
+      template:
+       src=templates/ntp.j2
+       dest=/etc/ntp.conf
+       owner=root
+       group=root
+       mode=0644
+       backup=yes
+      notify: start_restart_ntp_client
+      tags: copy_ntp_conf,start_ntp
+         
+  handlers:
+    - name: start_restart_ntp_client
+      service:
+        name=ntpd
+        state=restarted
+        enabled=yes
+      
