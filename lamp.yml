@@ -12,7 +12,7 @@
         - php-pdo
         - php-gd
         - php-mbstring
-        - mysql-python
+        
  
     - name: copy file
       shell: echo "<?php phpinfo (); ?>" > /var/www/html/info.php
