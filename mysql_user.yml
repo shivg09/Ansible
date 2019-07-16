@@ -1,0 +1,19 @@
+---
+- hosts: all
+  tasks:
+    - name: create user in mysql
+      mysql_user:
+        name: sanjay
+        password: sanjay123
+        priv: '*.*:ALL'
+        state: present 
+    - name: remove anonymous user
+      mysql_user:
+        name: ''
+        host: localhost
+        state: absent
+    - name: Ensure no user name 'raj' exist at all
+      mysql_user:
+        name: raj
+        host_all: yes
+        state: absent 
