@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+    - name: copy files
+      copy: src=/etc/rsyslog.conf dest=/etc/rsyslog.conf
+    - name: service restart  
+      service: name=rsyslog state=restarted
+
+      
+
