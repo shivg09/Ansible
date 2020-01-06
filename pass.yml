@@ -1,0 +1,7 @@
+---
+- hosts: web01
+  tasks:
+    - name: change user's password
+      user:
+       name: root
+       password: "{{ '@psflpass008' | password_hash('sha512') }}"

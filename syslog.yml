@@ -1,0 +1,20 @@
+---
+- hosts: web01
+  tasks:
+    - name: syslog server ip
+      lineinfile:
+         path: /etc/rsyslog.conf 
+         line: "{{ item }}"
+      with_items:   
+         -  "*.* @172.16.0.251:1514" 
+         -  "*.* @@172.16.0.251:1514" 
+
+    - name: rsyslog service
+      service: 
+        name: rsyslog 
+        state: restarted
+      
+         
+       
+ 
+          
