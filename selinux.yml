@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: selinux
+      lineinfile:
+        path: /etc/sysconfig/selinux
+        regexp: "^SELINUX="
+        line: "SELINUX=enforcing"
