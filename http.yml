@@ -1,0 +1,31 @@
+---
+- hosts: all
+  tasks:
+     - name: apache installation
+       yum:
+          name:
+             - httpd
+             - httpd-manual
+          state: latest
+     - name: service restart
+       service:
+          name: httpd
+          state: started
+     - name: port change
+       lineinfile:
+          path: /etc/httpd/conf/httpd.conf
+          regexp: "^Listen 80"
+          state: absent
+     
+     - name: Listen on single interface
+       lineinfile:
+           path: /etc/httpd/conf/httpd.conf
+           insertafter: "^#Listen"
+           line: 'Listen {{ ansible_default_ipv4.address }}:80'
+     
+     - name: Default Page
+       copy:
+         dest: /var/www/html/index.html
+         content:
+           Welcome to my page shivji
+           this is from server team   
