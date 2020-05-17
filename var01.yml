@@ -1,0 +1,13 @@
+# https://www.toptechskills.com/ansible-tutorials-courses/ansible-template-module-tutorial-examples/
+
+---
+- hosts: all
+  vars:
+    env: staging
+   
+  tasks:
+    - name: copy file
+      template:
+        src: myapp.conf.j2
+        dest: /etc/myapp.conf 
+      become: true
