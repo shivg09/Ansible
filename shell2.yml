@@ -1,0 +1,15 @@
+---
+- name: run shell commands
+  hosts: all
+  gather_facts: false
+  vars:
+    commands_to_run:
+      - uptime | cut -d "," -f1 | awk '{print $2,$3,$4}'
+      - df -Ph | awk '{print $5}'
+  tasks:
+    - name: run shell command
+      shell: "{{ item }}"
+      with_items: "{{ commands_to_run }}"
+      register: shell_output
+
+    - debug: var=shell_output

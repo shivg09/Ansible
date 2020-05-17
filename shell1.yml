@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    - name: shell module
+      shell: echo "hello shiv g" > $HOME/test_file.txt
+      register: shell_output
+   
+    #- debug: var=shell_output
+

@@ -1,0 +1,14 @@
+---
+- hosts: all
+  tasks:
+    - name: shell module
+      shell: uptime | cut -d "," -f1 | awk '{print $2,$3,$4}'
+      register: shell_output
+    - debug: var=shell_output.stdout_lines
+   
+    - name: shell01
+      shell: df -h |awk '{print $5}'
+      register: shell1_output
+   
+    - debug: var=shell1_output.stdout_lines
+

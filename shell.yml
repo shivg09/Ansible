@@ -1,0 +1,8 @@
+---
+- hosts: all
+  tasks:
+    - name: shell module
+      shell: rm $HOME/test_file.txt
+      args: 
+        removes: "$HOME/test_file.txt"
+
