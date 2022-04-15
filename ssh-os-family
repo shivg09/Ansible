@@ -1,0 +1,24 @@
+
+ tasks:
+    - name: ssh enable
+      lineinfile:
+         dest: /etc/ssh/sshd_config
+         regexp: '^#PermitRootLogin yes'
+         line: '#PermitRootLogin no'
+      notify:
+         - restart sshd
+         - restart ssh
+  handlers:
+    - name: restart sshd
+      service:
+         name: sshd
+         state: restarted
+         enabled: true
+
+      when: ansible_os_family == 'RedHat'
+    - name: restart ssh
+      service:
+         name: apache2
+         state: restarted
+         enabled: true
+      when: ansible_os_family == 'Debian'
