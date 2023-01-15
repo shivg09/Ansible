@@ -1,0 +1,23 @@
+(To increase the instance configuration)
+
+$ResourceGroupName = "myrg08"
+$vmname = "myvmv009"
+$DesiredVMSize = "Standard_DS1_v2"
+
+
+$vm = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $vmname
+$vm.HardwareProfile.VmSize=$DesiredVMSize
+$Vm | Update-AzVM
+
+
+=====================
+Add additional disk
+
+$ResourceGroupName = "myrg08"
+$vmname = "myvmv009"
+$Datadiskname = "app-datadisk"
+$Location = "West Europe"
+
+$vm = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $
+$vm |Add-AzVMDatadisk -Name $Datadiskname -DiskSizeGB 16 -CreateOption Empty -Lun 0
+$Vm |Update-AzVM
