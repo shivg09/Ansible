@@ -21,3 +21,35 @@ $Location = "West Europe"
 $vm = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $
 $vm |Add-AzVMDatadisk -Name $Datadiskname -DiskSizeGB 16 -CreateOption Empty -Lun 0
 $Vm |Update-AzVM
+
+
+===================================================
+VM Status Check
+
+##$Statuses=Get-AzVM -ResourceGroupName OD-ERP-RESGRP -Name OD-MSG-1 -Status
+##$Statuses.Statuses
+##$Statuses.Statuses[1].Code
+#=========================================
+#$ResourceGroupname="od-erp-resgrp"
+#$vmname="OD-MSG-1"
+
+#$Statuses=(Get-AzVM -ResourceGroupName OD-ERP-RESGRP -Name $vmname -Status).Statuses
+
+#$Statuses[1].Code
+#===============================
+$ResourceGroupname="od-erp-resgrp"
+$vmname="OD-MSG-1"
+
+$Statuses=(Get-AzVM -ResourceGroupName OD-ERP-RESGRP -Name $vmname -Status).Statuses
+
+if ($Statuses[1].Code -eq "PowerState/running")
+{
+'Shut down the virtual machine'
+Stop-AzVM -ResourceGroupName $ResourceGroupname -Name $vmname -Force
+}
+else
+{
+'vm is already stopped'
+}
+
+=============================
