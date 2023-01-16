@@ -53,3 +53,19 @@ else
 }
 
 =============================
+
+APP SERVICE CREATE
+
+$ResourceGroupName = "app-rg"
+$Location = "centralindia"
+$AppServicePlanName="app-plan"
+$WebAppName="myapp00100"
+
+New-AzResourceGroup -Name $ResourceGroupName -Location $Location
+New-AzAppServicePlan -ResourceGroupname $resourcegroupname -Location $location ` -Tier "B1" -NumberofWorkers 1 -Name  $AppServicePlanName
+#WebApp
+
+New-AzWebApp -ResourceGroupName $resourcegroupname -Location $location -Name $WebAppName -AppServicePlan $AppServicePlanName
+
+================================
+
