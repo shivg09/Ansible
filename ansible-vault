@@ -1,0 +1,19 @@
+https://www.ansiblepilot.com/articles/use-ansible-vault-in-ansbile-playbook-ansible-vault/
+
+=====================
+
+---
+- name: Playbook with Vault
+  hosts: all
+  tasks:
+    - name: include vault
+      ansible.builtin.include_vars:
+        file: mypassword.yml
+
+    - name: print variable
+      ansible.builtin.debug:
+        var: mypassword
+        
+        
+        =============
+        
