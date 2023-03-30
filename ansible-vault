@@ -1,3 +1,24 @@
+https://www.learnitguide.net/2018/03/how-to-use-ansible-vault-to-protect.html?m=1
+
+ansible-vault encrypt user.yaml
+ansible-playbook --ask-vault-pass user.yaml
+
+root@ip-172-31-15-78:/etc/ansible# ansible-vault view  user.yaml
+Vault password:
+---
+- hosts: all
+  tasks:
+    - name: adding user
+      user:
+        name: ram
+        password: ram@123
+        shell: /bin/bash
+        group: apache
+        createhome: yes
+        home: /home/ram
+
+
+=====================
 https://www.ansiblepilot.com/articles/use-ansible-vault-in-ansbile-playbook-ansible-vault/
 
 =====================
