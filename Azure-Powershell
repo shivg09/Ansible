@@ -68,4 +68,23 @@ New-AzAppServicePlan -ResourceGroupname $resourcegroupname -Location $location `
 New-AzWebApp -ResourceGroupName $resourcegroupname -Location $location -Name $WebAppName -AppServicePlan $AppServicePlanName
 
 ================================
+https://stackoverflow.com/questions/70145486/powershell-script-to-get-list-of-running-vms-and-stop-them
+VM stop
 
+$vm = Get-Azvm -Status
+
+foreach($vms in $vm)
+{
+   $statuscheck = Get-AzVM -ResourceGroupName $vms.ResourceGroupName -Name $vms.Name -Status 
+    if($statuscheck.Statuses.DisplayStatus[1] -eq "VM running")
+    {  
+
+        Write-Output "Stopping virtual machine...$($vms.Name)"
+
+        Stop-AzVM -ResourceGroupName $vms.ResourceGroupName -Name $vms.Name -Force
+    }   
+    else
+    {
+        Write-output "Virtual machine $($vms.Name) is already in stopped state"
+    }
+}
