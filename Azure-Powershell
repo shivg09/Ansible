@@ -88,3 +88,15 @@ foreach($vms in $vm)
         Write-output "Virtual machine $($vms.Name) is already in stopped state"
     }
 }
+============================
+VM creation using Powershell
+
+$ResourceGroupName="rg1"
+$VirtualNetworkName="vm1-vnet"
+$Subnet="default"
+$Location="centralindia"
+$vmname="vm6"
+$PublicIPName="myip5"
+$VMSize = "Standard_B2s"
+$SecurityGroupName="myNetworkSecurityGroup"
+New-AzVm -ResourceGroupName $ResourceGroupName -Name $vmname -Location $Location -VirtualNetworkName $VirtualNetworkName -SubnetName $Subnet -Image Debian -SecurityGroupName $SecurityGroupName -Size $VMSize -PublicIpAddressName $PublicIPName -OpenPorts 80,3389,22
