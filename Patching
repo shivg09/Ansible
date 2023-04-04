@@ -1,0 +1,64 @@
+- hosts: webserver
+  become: true
+  tasks:
+    - name: Check Nginx service status
+      command: systemctl status nginx
+      register: nginx_status
+
+    - name: Display Nginx service status
+      debug:
+        var: nginx_status.stdout_lines
+==============
+K-patching
+
+sudo apt-get update
+sudo apt-get install kpatch-tools
+Download the kernel patch that you want to apply. You can find kernel patches on the official website of the Linux kernel or on other online sources.
+
+Extract the kernel patch file to a directory on your system.
+
+Compile the kernel patch:
+kpatch-build -s <source_dir> -p <patch_file> -v <version> -o <output_dir>
+Load the Kpatch module:
+sudo modprobe kpatch
+sudo kpatch apply <patch_file>
+Verify that the patch was applied successfully:
+sudo kpatch list
+============================
+SAME using ansible
+
+- hosts: webserver
+  become: true
+  tasks:
+    - name: Install Kpatch
+      apt:
+        name: kpatch-tools
+        state: present
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Download kernel patch
+      get_url:
+        url: http://example.com/patch_file.patch
+        dest: /tmp/patch_file.patch
+
+    - name: Compile kernel patch
+      command: kpatch-build -s /usr/src/linux -p /tmp/patch_file.patch -v 4.19.0-14-amd64 -o /tmp/
+      args:
+        chdir: /tmp/
+
+    - name: Load Kpatch module
+      modprobe:
+        name: kpatch
+
+    - name: Apply kernel patch
+      command: kpatch apply /tmp/patch_file.ko
+
+    - name: Verify kernel patch
+      command: kpatch list
+      register: kpatch_status
+
+    - name: Display kernel patch status
+      debug:
+        var: kpatch_status.stdout_lines
+=============
+
